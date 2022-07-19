@@ -1,0 +1,190 @@
+﻿@page
+@using SAMHO.Models
+@model RegisterModel
+@{
+    ViewData["Title"] = "Paciente nuevo";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+            <h2>Registrar Paciente Nuevo</h2>
+            <hr />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <table>
+                <thead>
+                    <tr>
+                        <td colspan="2">
+                            
+                        </td>
+                    </tr>
+                </thead>
+                <tr>
+                    <td class="form-floating">
+                            <input asp-for="Input.PrimerNombre" class="form-control" aria-required="true" />
+                            <label asp-for="Input.PrimerNombre"></label>                            
+                    </td>
+                    <td class="form-floating">
+                            
+                            <input asp-for="Input.PrimerApellido" class="form-control" aria-required="true" />
+                            <label asp-for="Input.PrimerApellido"></label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span asp-validation-for="Input.PrimerNombre" class="text-danger"></span>
+                    </td>
+                    <td>
+                        <span asp-validation-for="Input.PrimerApellido" class="text-danger"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="form-floating">
+                        <input asp-for="Input.SegundoNombre" class="form-control" aria-required="true" />
+                        <label asp-for="Input.SegundoNombre"></label>
+                    </td>
+                    <td class="form-floating">
+                        <input asp-for="Input.SegundoApellido" class="form-control" aria-required="true" />
+                        <label asp-for="Input.SegundoApellido"></label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span asp-validation-for="Input.SegundoNombre" class="text-danger"></span>
+                    </td>
+                    <td>
+                        <span asp-validation-for="Input.SegundoApellido" class="text-danger"></span>
+                    </td>
+                </tr>
+                 <tr>
+                    <td class="form-floating">
+                        <input asp-for="Input.Direccion" class="form-control" autocomplete="on" aria-required="true" />
+                        <label asp-for="Input.Direccion"></label>
+                    </td>
+                    <td class="form-floating">
+                        <input asp-for="Input.Telefono" class="form-control" autocomplete="on" aria-required="true" />
+                        <label asp-for="Input.Telefono"></label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span asp-validation-for="Input.Direccion" class="text-danger"></span>
+                    </td>
+                    <td>
+                        <span asp-validation-for="Input.Telefono" class="text-danger"></span>                      
+                    </td>
+                </tr>
+                <tr>
+                    <td class="form-floating">
+                        <input asp-for="Input.FechaNacimiento" class="form-control" autocomplete="off" aria-required="true" />
+                        <label asp-for="Input.FechaNacimiento"></label>
+                        
+                    </td>
+                    <td class="form-floating">
+                        
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span asp-validation-for="Input.FechaNacimiento" class="text-danger"></span>
+                    </td>
+                    <td>
+                        <label asp-for="Input.IdPaisNacimiento"></label>
+                        @{
+                            List<SelectListItem> lPais = new List<SelectListItem>();
+
+                            lPais = Pais.ListaPaises().Select(v => new SelectListItem {
+                                            Text = v.NombrePais,
+                                            Value = v.IdPais.ToString()
+                                        }).ToList();
+                        }
+                        <select asp-for="Input.IdPaisNacimiento" asp-items="@(lPais)"></select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="form-control">
+                        <label asp-for="Input.IdTipoIdentificacion"></label>
+                        @{
+                            List<SelectListItem> lTipoId = new List<SelectListItem>();
+
+                            lTipoId = Enum.GetValues(typeof(GlobalData.TIPOIDENTIFICACION)).Cast<GlobalData.TIPOIDENTIFICACION>().Select(v => new SelectListItem {
+                                            Text = v.ToString(),
+                                            Value = ((int)v).ToString()
+                                        }).ToList();
+
+                        }
+                        <select asp-for="Input.IdTipoIdentificacion" asp-items="@(lTipoId)"></select>
+                    </td>
+                    <td class="form-floating">
+                        <input asp-for="Input.Identificacion" class="form-control" autocomplete="off" aria-required="true" />
+                        <label asp-for="Input.Identificacion"></label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span asp-validation-for="Input.IdTipoIdentificacion" class="text-danger"></span>
+                    </td>
+                    <td>
+                        <span asp-validation-for="Input.Identificacion" class="text-danger"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="form-control">
+                        <label asp-for="Input.Sexo">Selecciona tu Sexo</label>
+                        @{
+                            List<SelectListItem> lSexo = new List<SelectListItem>();
+
+                            lSexo = Enum.GetValues(typeof(GlobalData.SEXO)).Cast<GlobalData.SEXO>().Select(v => new SelectListItem {
+                                            Text = v.ToString(),
+                                            Value = ((int)v).ToString()
+                                        }).ToList();
+                        }
+                        <select asp-for="Input.Sexo" asp-items="@(lSexo)"></select>                        
+                    </td>
+                    <td class="form-floating">
+                        <input asp-for="Input.Email" class="form-control" autocomplete="off" aria-required="true" />
+                        <label asp-for="Input.Email"></label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span asp-validation-for="Input.Sexo" class="text-danger"></span>
+                    </td>
+                    <td>
+                        <span asp-validation-for="Input.Email" class="text-danger"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="form-floating">
+                        <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" />
+                        <label asp-for="Input.Password"></label>
+                    </td>
+                    <td class="form-floating">
+                        <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" />
+                        <label asp-for="Input.ConfirmPassword"></label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span asp-validation-for="Input.Password" class="text-danger"></span>
+                    </td>
+                    <td>
+                        <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Crear</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

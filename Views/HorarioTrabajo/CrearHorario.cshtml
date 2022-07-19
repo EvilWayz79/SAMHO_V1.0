@@ -1,0 +1,137 @@
+﻿@model SAMHO.Models.HorarioTrabajo
+
+@{
+    ViewBag.Title = "Editar Especialidad";
+    Layout = "~/Views/Shared/_PartialLayout.cshtml";
+}
+
+<h4>HorarioTrabajo</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CrearHorario">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+
+                <label asp-for="NombreHorario" class="control-label">Nombre</label><br />
+                <input asp-for="NombreHorario" class="form-control" /><br />
+                <span asp-validation-for="NombreHorario" class="text-danger"></span><br />
+
+
+                <label asp-for="DiasSemana" class="control-label">Dias de la semana</label><br />
+                
+
+                @{
+
+                    GlobalData.DIASDELASEMANA[] days = (GlobalData.DIASDELASEMANA[])Enum.GetValues(typeof(GlobalData.DIASDELASEMANA));
+
+                    
+                    for (int i = 0; i < days.Length; i++)
+                    {
+                        <label >@days[i]</label>
+                        <input type="checkbox" value=@days[i] class="diasCheck">
+                        if ((i+1) % 5 == 0)
+                        {   
+                            <div><br>Fin de Semana<br /></div>
+                        }
+                    }
+                }
+                
+                <input asp-for="DiasSemana" class="form-control" style="display:none" readonly="readonly"/>
+
+                <br /><span asp-validation-for="DiasSemana" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                @{
+                    List<SelectListItem> HorasDia = new List<SelectListItem>();
+                    for (int i = 0; i< 24; i++)
+                    {
+                        string textHora = i.ToString();
+
+                        if (textHora.Count() == 1)
+                            textHora = string.Concat("0", textHora);
+
+                        SelectListItem hora = new SelectListItem { Text = textHora, Value = i.ToString() };
+                        HorasDia.Add(hora);
+                    }
+
+                    List<SelectListItem> MinutosHora = new List<SelectListItem>();
+                    for (int j = 0; j< 60; j++)
+                    {
+                        string textMinuto = j.ToString();
+                        if (textMinuto.Count() == 1)
+                            textMinuto = string.Concat("0", textMinuto);
+
+                        SelectListItem minuto = new SelectListItem { Text = textMinuto, Value = j.ToString() };
+                        MinutosHora.Add(minuto);
+                    }
+                }
+
+                <table>
+                    <tr>
+                        <td>
+                            <label asp-for="HInicio" class="control-label">Hora de inicio</label>
+                        </td>
+                        <td>
+                            <label asp-for="MInicio" class="control-label">Minuto inicio</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <select asp-for="HInicio" asp-items="@(HorasDia)"></select>
+                        </td>
+                        <td>
+                            <select asp-for="MInicio" asp-items="@(MinutosHora)"></select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label asp-for="HFin" class="control-label">Hora fin</label>
+                        </td>
+                        <td>
+                            <label asp-for="MFin" class="control-label">Minuto fin</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <select asp-for="HFin" asp-items="@(HorasDia)"></select>
+                        </td>
+                        <td>
+                            <select asp-for="MFin" asp-items="@(MinutosHora)"></select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <span asp-validation-for="HFin" class="text-danger"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label asp-for="IdEstado" class="control-label">Estado del horario</label>
+                                @{
+                                    List<SelectListItem> lEstados = new List<SelectListItem>();
+                                    foreach (var item in Estado.lEstados(true, "HORARIOTRABAJO"))
+                                    {                        
+                                        SelectListItem itemEstado = new SelectListItem { Value = item.IdEstado.ToString().Trim(), Text = item.TipoEstado };
+                                        lEstados.Add(itemEstado);
+                                    }
+                                }
+                                <select asp-for="IdEstado" asp-items="@(lEstados)"></select>
+                                <br /><span asp-validation-for="IdEstado" class="text-danger"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="submit" value="Crear Horario" class="btn btn-primary" />
+                        </td>
+                        <td>
+                            <a asp-action="ListarHorario">Cancelar</a>
+                        </td>
+                    </tr>
+                </table>                
+            </div>
+        </form>
+    </div>
+</div>
+
+

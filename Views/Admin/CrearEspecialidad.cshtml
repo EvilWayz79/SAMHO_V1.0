@@ -1,0 +1,63 @@
+﻿@model SAMHO.Models.Especialidad
+
+@{
+    ViewBag.Title = "Nueva Especialidad";
+    Layout = "~/Views/Shared/_PartialLayout.cshtml";
+}
+
+<h4>Crear Especialidad</h4>
+<hr />
+<div class="row">
+    @{
+        if (ViewBag.resultadoCrearEspecialidad != null)
+        {
+            GlobalData.TRANSACTRESULTS resultado;
+
+            if(Enum.TryParse(ViewBag.resultadoCrearEspecialidad, out resultado))
+                switch (resultado)
+                {
+                    case GlobalData.TRANSACTRESULTS.FALLO:
+                        <p class="text-danger">ERROR AL CREAR NUEVA ESPECIALIDAD</p>
+                        break;
+
+                    case GlobalData.TRANSACTRESULTS.NOUNICO:
+                        <p class="text-danger">YA EXISTE ESA ESPECIALIDAD</p>
+                        break;
+                }
+        }
+    }
+
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CrearEspecialidad">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="NombreEspecialidad" class="control-label"></label>
+                <input asp-for="NombreEspecialidad" class="form-control" maxlength="20" />
+                <span asp-validation-for="NombreEspecialidad" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EstadoEspecialidad" class="control-label"></label>
+                @{
+                    List<SelectListItem> lEstados = new List<SelectListItem>();
+                    foreach (var item in Estado.lEstados(true, "ESPECIALIDAD"))
+                    {                        
+                        SelectListItem itemEstado = new SelectListItem { Value = item.IdEstado.ToString().Trim(), Text = item.TipoEstado };
+                        lEstados.Add(itemEstado);
+                    }
+                }
+                <select asp-for="IdEstadoEspecialidad" asp-items="@(lEstados)"></select>
+                <span asp-validation-for="IdEstadoEspecialidad" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Crear" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="PantallaAdministracion">Cancelar</a>
+</div>
+

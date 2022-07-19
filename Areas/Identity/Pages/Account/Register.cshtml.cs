@@ -1,0 +1,279 @@
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+#nullable disable
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Text.Encodings.Web;
+using System.Threading;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Logging;
+using SAMHO.Models;
+
+namespace SAMHO.Areas.Identity.Pages.Account
+{
+    public class RegisterModel : PageModel
+    {
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
+        //Role
+        //RoleManager<IdentityRole>? _roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>()
+        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly IUserStore<ApplicationUser> _userStore;
+        private readonly IUserEmailStore<ApplicationUser> _emailStore;
+        private readonly ILogger<RegisterModel> _logger;
+        private readonly IEmailSender _emailSender;
+
+        public RegisterModel(
+            UserManager<ApplicationUser> userManager,
+            RoleManager<IdentityRole> roleManager,
+            IUserStore<ApplicationUser> userStore,
+            SignInManager<ApplicationUser> signInManager,
+            ILogger<RegisterModel> logger,
+            IEmailSender emailSender)
+        {
+            _userManager = userManager;
+            _roleManager = roleManager;
+            _userStore = userStore;
+            _emailStore = GetEmailStore();
+            _signInManager = signInManager;
+            _logger = logger;
+            _emailSender = emailSender;
+        }
+
+        /// <summary>
+        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+        ///     directly from your code. This API may change or be removed in future releases.
+        /// </summary>
+        [BindProperty]
+        public InputModel Input { get; set; }
+
+        /// <summary>
+        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+        ///     directly from your code. This API may change or be removed in future releases.
+        /// </summary>
+        public string ReturnUrl { get; set; }
+
+        /// <summary>
+        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+        ///     directly from your code. This API may change or be removed in future releases.
+        /// </summary>
+        public IList<AuthenticationScheme> ExternalLogins { get; set; }
+
+        public const string GRUPOESTADO = "USUARIO";
+        public const string TIPOESTADOACTIVO = "ACTIVO";
+
+
+        /// <summary>
+        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+        ///     directly from your code. This API may change or be removed in future releases.
+        /// </summary>
+        public class InputModel
+        {
+            [Required(ErrorMessageResourceType = typeof(RESOURCE), ErrorMessageResourceName = "FormErrCampoRequerido"), MaxLength(20)]
+            [Display(Name = "Primer Nombre")]
+            public string PrimerNombre { get; set; }
+            [Required(ErrorMessageResourceType = typeof(RESOURCE), ErrorMessageResourceName = "FormErrCampoRequerido"), MaxLength(20)]
+            [Display(Name = "Primer Apellido")]
+            public string PrimerApellido { get; set; }
+
+            [Required(ErrorMessageResourceType = typeof(RESOURCE), ErrorMessageResourceName = "FormErrCampoRequerido"), MaxLength(20)]
+            [Display(Name = "Segundo Nombre")]
+            public string SegundoNombre { get; set; }
+
+            [Required(ErrorMessageResourceType = typeof(RESOURCE), ErrorMessageResourceName = "FormErrCampoRequerido"), MaxLength(20)]
+            [Display(Name = "Segundo Apellido")]
+            public string SegundoApellido { get; set; }
+
+            [Required(ErrorMessageResourceType = typeof(RESOURCE), ErrorMessageResourceName = "FormErrCampoRequerido")]
+            [Display(Name = "Tipo de Identificación")]
+            public int IdTipoIdentificacion { get; set; }
+
+            [Required(ErrorMessageResourceType = typeof(RESOURCE), ErrorMessageResourceName = "FormErrCampoRequerido"), MaxLength(20)]
+            [Display(Name = "Identificación")]
+            public string Identificacion { get; set;}
+
+            [Display(Name = "Fecha de Nacimiento")]
+            public DateTime FechaNacimiento { get; set; }
+
+            [Display(Name = "País de Nacimiento")]
+            public int IdPaisNacimiento { get; set;}
+
+            [MaxLength(20)]
+            [Display(Name = "Teléfono")]
+            public string Telefono { get; set; }
+
+            [Required(ErrorMessageResourceType = typeof(RESOURCE), ErrorMessageResourceName = "FormErrCampoRequerido"), MaxLength(100)]
+            [Display(Name = "Dirección")]
+            public string Direccion { get; set; }
+
+            [Display(Name = "Sexo")]
+            public string Sexo { get; set; }
+
+
+
+            /// <summary>
+            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+            ///     directly from your code. This API may change or be removed in future releases.
+            /// </summary>
+            [Required]
+            [EmailAddress]
+            [Display(Name = "Email")]
+            public string Email { get; set; }
+
+            /// <summary>
+            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+            ///     directly from your code. This API may change or be removed in future releases.
+            /// </summary>
+            [Required]
+            [StringLength(100, ErrorMessage = "El {0} debe tener al menos {2} y se de máximo {1} caracteres de largo.", MinimumLength = 6)]
+            [DataType(DataType.Password)]
+            [Display(Name = "Contraseña")]
+            public string Password { get; set; }
+
+            /// <summary>
+            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+            ///     directly from your code. This API may change or be removed in future releases.
+            /// </summary>
+            [DataType(DataType.Password)]
+            [Display(Name = "Confirmar Contraseña")]
+            [Compare("Password", ErrorMessage = "La contraseña y la confirmación de contraseña no coinciden.")]
+            public string ConfirmPassword { get; set; }
+        }
+
+
+        public async Task OnGetAsync(string returnUrl = null)
+        {
+            ReturnUrl = returnUrl;
+            ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+        }
+
+        public async Task<IActionResult> OnPostAsync(string returnUrl = null)
+        {
+            returnUrl ??= Url.Content("~/");
+            try
+            {
+                ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+
+                //BUSCAR UNICO ID
+                if (!ApplicationUser.ValidarIdUnica(Input.Identificacion))
+                    ModelState.AddModelError(String.Empty, "Identificacion ya registrada");
+
+                
+
+                if (ModelState.IsValid)
+                {
+                    var user = CreateUser();
+
+                    await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
+                    await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
+
+                    user.Direccion = Input.Direccion;
+                    user.FechaCreacion = DateTime.Now;
+                    user.FechaNacimiento = Input.FechaNacimiento;
+                    user.PhoneNumber = Input.Telefono;
+                    //user.Email = Input.Email;
+                    user.Identificacion = Input.Identificacion;
+                    //paciente no tiene especialidad
+                    user.IdEspecialidad = 0;
+                    
+                    //retorna codigo de estado de la base de datos
+                    int idEstadoUsuario = Estado.GetCodigoEstadoUsuario(GRUPOESTADO, TIPOESTADOACTIVO);
+
+                    user.IdEstadoUsuario = idEstadoUsuario;
+                    user.IdHorarioTrabajo = 0;
+                    user.IdPaisNacimiento = Input.IdPaisNacimiento;
+                    user.IdTipoIdentificacion = Input.IdTipoIdentificacion;
+                    user.IdTipoUsuario = 0;
+                    user.PrimerApellido = Input.PrimerApellido;
+                    user.SegundoApellido = Input.SegundoApellido;
+                    user.PrimerNombre = Input.PrimerNombre;
+                    user.SegundoNombre = Input.SegundoNombre;
+                    user.Sexo = Input.Sexo;
+
+
+                    
+
+                    var result = await _userManager.CreateAsync(user, Input.Password);
+
+                    if (result.Succeeded)
+                    {
+                        _logger.LogInformation("Se registra un nuevo paciente.");
+
+                        var userId = await _userManager.GetUserIdAsync(user);
+                        var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+
+                        //Adicionar el rol de paciente al paciente nuevo
+
+                        await _userManager.AddToRoleAsync(user, "Paciente");
+                        
+                        code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+                        var callbackUrl = Url.Page(
+                            "/Account/ConfirmEmail",
+                            pageHandler: null,
+                            values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
+                            protocol: Request.Scheme);
+
+                        await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
+                            $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+
+                        if (_userManager.Options.SignIn.RequireConfirmedAccount)
+                        {
+                            return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
+                        }
+                        else
+                        {
+                            await _signInManager.SignInAsync(user, isPersistent: false);
+                            return LocalRedirect(returnUrl);
+                        }
+                    }
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                //TODO ERROR CODE
+            }
+
+            // If we got this far, something failed, redisplay form
+            return Page();
+        }
+
+        private ApplicationUser CreateUser()
+        {
+            try
+            {
+                return Activator.CreateInstance<ApplicationUser>();
+            }
+            catch
+            {
+                throw new InvalidOperationException($"Can't create an instance of '{nameof(ApplicationUser)}'. " +
+                    $"Ensure that '{nameof(ApplicationUser)}' is not an abstract class and has a parameterless constructor, or alternatively " +
+                    $"override the register page in /Areas/Identity/Pages/Account/Register.cshtml");
+            }
+        }
+
+        private IUserEmailStore<ApplicationUser> GetEmailStore()
+        {
+            if (!_userManager.SupportsUserEmail)
+            {
+                throw new NotSupportedException("The default UI requires a user store with email support.");
+            }
+            return (IUserEmailStore<ApplicationUser>)_userStore;
+        }
+    }
+}

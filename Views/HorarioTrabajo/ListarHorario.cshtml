@@ -1,0 +1,60 @@
+﻿@model IEnumerable<SAMHO.Models.HorarioTrabajo>
+
+<p>
+    <a asp-action="CrearHorario">Crear Nuevo</a>
+</p>
+
+@if(Model.Count<HorarioTrabajo>() == 0)
+        {
+            <tr>
+                <td>
+                    No tienes horarios creados
+                </td>
+            </tr>        
+        }
+        else{
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                Nombre Horario
+                            </th>
+                            <th>
+                                Dias Semana
+                            </th>
+                            <th>
+                                Hora de entrada
+                            </th>
+                            <th>
+                                Hora de salida
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                @foreach (var item in Model) {
+
+                            /*string hInicio = item.HInicio.ToString().Length < 2 ? string.Concat("0",item.HInicio.ToString()) : item.HInicio.ToString();
+                            string mInicio = item.MInicio.ToString().Length < 2 ? string.Concat("0",item.MInicio.ToString()) : item.MInicio.ToString();
+                            string hFin = item.HFin.ToString().Length < 2 ? string.Concat("0",item.HFin.ToString()) : item.HFin.ToString();
+                            string mFin = item.MFin.ToString().Length < 2 ? string.Concat("0",item.MFin.ToString()) : item.MFin.ToString();*/
+                        <tr>
+                            <td>
+                            @Html.DisplayFor(modelItem => item.NombreHorario)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DiasSemana)
+                            </td>
+                            <td>
+                                @string.Concat(HorarioTrabajo.HoraFormat(item.HInicio, item.MInicio))
+                            </td>
+                            <td>
+                                @string.Concat(HorarioTrabajo.HoraFormat(item.HFin, item.MFin))
+                            </td>
+                            <td>
+                                <a asp-action="EditarHorario" asp-route-id="@item.IdHorarioTrabajo">Edit</a>
+                            </td>
+                        </tr>
+                }
+                    </tbody>
+                </table>
+}

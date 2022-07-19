@@ -1,0 +1,79 @@
+﻿
+@{
+    ViewData["Title"] = "PAGINA DEL ADMINISTRADOR";
+}
+<div class="card">
+    <h1 class="accordion-header">PAGINA DEL ADMINISTRADOR <img class="align-content-md-end" src="~/lib/IMG/1840082.png" width="340px" height="256px"></h1>    
+    <div class="accordion-body">
+        <div class="accordion-button">ESPECIALIDADES</div>
+        <button type="button" id="buttonDiv">Agregar</button>
+        <div id="CrearEspDiv"></div>
+        <div id="EditarEspDiv"></div>
+        @{
+            /*var routeUrl = Url.RouteUrl(ViewContext.RouteData.Values);
+            var qsPath = ViewContext.HttpContext.Request.QueryString.Value;
+            var returnUrl = $"{routeUrl}{qsPath}";*/
+            if(!ViewContext.HttpContext.Request.Query["restultadoCreaEspecialidad"].ToString().Equals(string.IsNullOrEmpty))
+            {
+                var resultadoCrearEspecialidad = ViewContext.HttpContext.Request.Query["restultadoCreaEspecialidad"].ToString();
+
+                GlobalData.TRANSACTRESULTS resultado;
+
+                if(Enum.TryParse(resultadoCrearEspecialidad, out resultado))
+                    switch (resultado)
+                    {
+                        case GlobalData.TRANSACTRESULTS.EXITO:
+                            <p class="text-info">TRANSACCION EXITOSA</p>
+                            break;
+                    }
+            }
+            if(ViewData["ListaEspecialidades"] != null)
+            {   
+                List<Especialidad> lEspecialidades = (List<Especialidad>)ViewData["ListaEspecialidades"];                
+                
+                if (lEspecialidades.Count == 0)
+                {
+                            <p>NO EXISTEN ESPECIALIDADES</p>
+                }
+                else
+                {
+                            <table class="table table-sm table-striped table-hover border-bottom">
+                            <thead><tr><th>Codigo Especialidad</th><th>Especialidad</th><th>Estado</th><th>Editar</th></tr></thead>
+                            <tbody>
+                            @{
+                                foreach(Especialidad especialidad in lEspecialidades)
+                                {
+                                    if (especialidad.IdEspecialidad != 0)
+                                    {
+                                            <tr>
+                                                <td class="d-none d-lg-table-cell">
+                                                    @especialidad.IdEspecialidad                                        
+                                                </td>
+                                                <td>
+                                                    @especialidad.NombreEspecialidad
+                                                </td>                                            
+                                                <td>
+                                                    @especialidad.EstadoEspecialidad
+                                                </td>
+                                                <td>
+                                                    <button type="button" class="editButton" value=@especialidad.IdEspecialidad>Editar</button>
+                                                </td>
+                                            </tr>
+                                    }
+                                }
+                            }
+                            </tbody>
+                            </table>
+                }
+            }
+        }
+
+        <div></div>
+        <div class="accordion-button">HORARIOS</div>
+        <div class="accordion-button">PERSONAL DEL HOSPITAL</div>
+        <div class="accordion-button">XXX1</div>
+        <div class="accordion-button">XXX2</div>
+    </div>
+</div>
+
+

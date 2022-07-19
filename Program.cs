@@ -1,20 +1,39 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using SAMHO.Data;
+using SAMHO.Models;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+//cadena de conexion a globales
+GlobalData.APLICACION["connectionString"] = connectionString;
+
+
+
+
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
-builder.Services.AddControllersWithViews();
 
+
+builder.Services.AddControllersWithViews();
 var app = builder.Build();
+
+
+IServiceProvider serviceProvider = app.Services;
+
+
+//Si no estan creados, crear roles y usuario Admin
+InitUserRole.AdminAndRoles(serviceProvider, args);
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
