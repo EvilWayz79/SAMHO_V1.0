@@ -20,6 +20,12 @@ namespace SAMHO.Models
         [Required(ErrorMessageResourceType = typeof(RESOURCE), ErrorMessageResourceName = "FormErrCampoRequerido"), MaxLength(20)]
         public string NombreHorario { get; set; }
 
+        /// <summary>
+        /// Retorna una combinacion de horas y minutos en formato para visualizar
+        /// </summary>
+        /// <param name="hora"></param>
+        /// <param name="minuto"></param>
+        /// <returns></returns>
         public static string HoraFormat(int hora, int minuto)
         {
             return string.Concat(hora.ToString().Length < 2 ? string.Concat("0", hora.ToString()) : hora.ToString(),

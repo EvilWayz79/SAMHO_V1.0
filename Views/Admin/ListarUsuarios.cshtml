@@ -1,0 +1,59 @@
+﻿@model IEnumerable<SAMHO.Models.AUViewModel>
+
+<p>
+    <a asp-action="CrearUsuario" class="btn btn-primary btn-sm" >Crear Usuario</a>
+</p>
+
+@if(Model!=null)
+{
+    <table class="table">    
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.UserName)
+                </th>
+                <th>
+                    Nombre Completo
+                </th>
+                <th>
+                    Estado del Usuario
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ListaRoles)
+                </th>
+                <th>Accion</th>
+            </tr>
+        </thead>
+        <tbody>
+    @foreach (var item in Model) {
+
+            string estadoUsuario = Estado.GetCodigoEstadoUsuario(item.IdEstadoUsuario).TipoEstado;
+            string espacio = " ";
+            string NombreCompleto = string.Concat(item.PrimerNombre, espacio, item.SegundoNombre, espacio, item.PrimerApellido, espacio, item.SegundoApellido);
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+                <td>
+                    @NombreCompleto
+                </td>
+                <td>
+                    @estadoUsuario
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ListaRoles)
+                </td>
+                <td>
+                    @if (!item.ListaRoles.Contains("Administrador"))
+                    {
+                        <span>
+                            <a asp-action="EditarUsuario" asp-route-id="@item.Id" class="btn btn-outline-warning">Editar</a> |
+                            <a asp-action="DetallesUsuario" asp-route-id="@item.Id" class="btn btn-outline-info">Detalles</a>
+                        </span>
+                    }
+                </td>
+            </tr>
+    }
+        </tbody>
+    </table>
+}

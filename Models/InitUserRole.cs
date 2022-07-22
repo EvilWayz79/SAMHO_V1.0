@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.WebUtilities;
+using System.Text;
 
 namespace SAMHO.Models
 {
@@ -115,7 +117,15 @@ namespace SAMHO.Models
                 //Inicializar roles
                 UserManager<ApplicationUser>? _userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
                 RoleManager<IdentityRole>? _roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-                
+
+                //delete test code!!!
+                //var user = await _userManager.FindByIdAsync(id);
+
+                //var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+
+                //var result = await _userManager.ResetPasswordAsync(user, token, "MyN3wP@ssw0rd");
+                //DELETE TEST CODE!!!
+
 
                 //Crear Roles
                 List<string> roleNames = lRoles;
@@ -137,6 +147,12 @@ namespace SAMHO.Models
                 //Crear Admin ORIGINAL para la aplicacion
                 //verificar si existe
                 var _user = await _userManager.FindByEmailAsync(adminUserData.Email);
+
+                //resetear password
+                /*IdentityResult iresult = await _userManager.ResetPasswordAsync(_user, Encoding.UTF8.GetString(
+                WebEncoders.Base64UrlDecode(String.Empty)), adminUserData.Password);*/
+
+
                 if (_user == null)
                 {
                     ApplicationUser ApplicationUser = new();
@@ -147,7 +163,6 @@ namespace SAMHO.Models
                     ApplicationUser.IdEspecialidad = 0;
                     ApplicationUser.IdHorarioTrabajo = 0;
                     ApplicationUser.IdEstadoUsuario = 0;
-                    ApplicationUser.IdTipoUsuario = 0;
                     ApplicationUser.PrimerNombre = "Admin";
                     ApplicationUser.PrimerApellido = "Admin";
                     ApplicationUser.SegundoNombre = "Admin";

@@ -36,6 +36,21 @@
             PASAPORTE
         }
 
+        public static T ParseEnum<T>(string value)
+        {
+            return (T)Enum.Parse(typeof(T), value, true);
+        }
+
+        public enum TIPODEUSUARIO
+        { 
+            Administrador,
+            AltaGerencia,
+            Doctor,
+            Secretaria,
+            Auxiliar,
+            Paciente
+        }
+
 
 
     }

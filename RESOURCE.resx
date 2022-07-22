@@ -117,6 +117,22 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CantidadMedicina" xml:space="preserve">
+    <value>Cantidad de Medicina</value>
+    <comment>CFM</comment>
+  </data>
+  <data name="Direccion" xml:space="preserve">
+    <value>Direcci&amp;oacute;n</value>
+    <comment>CF</comment>
+  </data>
+  <data name="EstadoUsuario" xml:space="preserve">
+    <value>Estado de Usuario</value>
+    <comment>campo formulario (CF)</comment>
+  </data>
+  <data name="FechaCaducidad" xml:space="preserve">
+    <value>Fecha de Caducidad</value>
+    <comment>CFM</comment>
+  </data>
   <data name="FormErr" xml:space="preserve">
     <value>La contrase&amp;tilde;a debe coincidir</value>
     <comment>No coinciden PSSWD</comment>
@@ -129,6 +145,58 @@
     <value>Por favor ingresar caracteres validos</value>
     <comment>Caracteres ilegales en campo</comment>
   </data>
+  <data name="IdEspecialidad" xml:space="preserve">
+    <value>Especialidad</value>
+    <comment>CF</comment>
+  </data>
+  <data name="IdEstadoMedicina" xml:space="preserve">
+    <value>Estado Medicina</value>
+    <comment>CFM</comment>
+  </data>
+  <data name="IdEstadoUsuario" xml:space="preserve">
+    <value>Estado del Usuario</value>
+    <comment>CF</comment>
+  </data>
+  <data name="IdHorarioTrabajo" xml:space="preserve">
+    <value>Horario de Trabajo</value>
+    <comment>CF</comment>
+  </data>
+  <data name="IdPaisNacimiento" xml:space="preserve">
+    <value>Pa&amp;iacute;s de Nacimiento</value>
+    <comment>CF</comment>
+  </data>
+  <data name="NombreMedicina" xml:space="preserve">
+    <value>Nombre de la medicina</value>
+    <comment>*-FormularioMedicina-* NombreMedicina CFM</comment>
+  </data>
+  <data name="PacienteNuevoRegistrado" xml:space="preserve">
+    <value>Se ha registrado un nuevo paciente</value>
+    <comment>Mensaje a usuario</comment>
+  </data>
+  <data name="PrecioMedicina" xml:space="preserve">
+    <value>Precio de la Medicina</value>
+    <comment>CFM</comment>
+  </data>
+  <data name="PrimerApellido" xml:space="preserve">
+    <value>Primer Apellido</value>
+    <comment>CF</comment>
+  </data>
+  <data name="PrimerNombre" xml:space="preserve">
+    <value>Primer Nombre</value>
+    <comment>CF</comment>
+  </data>
+  <data name="RolUsuario" xml:space="preserve">
+    <value>Rol del Usuario</value>
+    <comment>CF</comment>
+  </data>
+  <data name="SegundoApellido" xml:space="preserve">
+    <value>Segundo Apellido</value>
+    <comment>CF</comment>
+  </data>
+  <data name="SegundoNombre" xml:space="preserve">
+    <value>Segundo Nombre</value>
+    <comment>CF</comment>
+  </data>
   <data name="SeleccionaDia" xml:space="preserve">
     <value>Selecciona al menos un día</value>
     <comment>Valida dias de la semana</comment>
@@ -137,8 +205,24 @@
     <value>Selecciona Estado</value>
     <comment>Para los estados</comment>
   </data>
+  <data name="SeleccionaRol" xml:space="preserve">
+    <value>Selecciona el Rol</value>
+    <comment>Seleccionar rol del usuario</comment>
+  </data>
   <data name="SeleccionarPais" xml:space="preserve">
     <value>Seleccionar Pais</value>
     <comment>Para selector paises</comment>
+  </data>
+  <data name="Sexo" xml:space="preserve">
+    <value>Sexo</value>
+    <comment>CF</comment>
+  </data>
+  <data name="UniqueId" xml:space="preserve">
+    <value>La Identificaci&amp;oacute;n debe ser &amp;uacute;nica</value>
+    <comment>Usuario con documento identidad unico</comment>
+  </data>
+  <data name="USUARIO" xml:space="preserve">
+    <value>USUARIO</value>
+    <comment>usuario</comment>
   </data>
 </root>

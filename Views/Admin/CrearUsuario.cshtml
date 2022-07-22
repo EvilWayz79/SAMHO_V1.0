@@ -1,0 +1,263 @@
+﻿@model SAMHO.Models.ApplicationUser
+
+@{
+    ViewBag.Title = "Usuario Nuevo";
+    Layout = "~/Views/Shared/_PartialLayout.cshtml";
+
+    List<SelectListItem> lRoles = new();
+    lRoles          = ViewBag.lRoles;
+
+    List<SelectListItem> lEspecialidades = new();
+    lEspecialidades = ViewBag.lEspecialidades;
+    
+    List<HorarioTrabajo> lHtrabajo = new();
+    lHtrabajo       = ViewBag.lHtrabajo;
+    List<SelectListItem> sliHorarioTrabajo = new();
+    List<SelectListItem> lPais = new();
+
+    lPais           = ViewBag.lPais;
+    List<SelectListItem> lEstados = new();
+
+    lEstados        = ViewBag.lEstados;
+    List<SelectListItem> lTipoId = new();
+    lTipoId         = ViewBag.lTipoId;
+
+    List<SelectListItem> lSexo = new();
+    lSexo           = ViewBag.lSexo;
+}
+
+<hr />
+<div id="DetalleHorarios" class="col-form-label-sm form-text rounded-2 w-50">
+    @{
+        
+                        @if (lHtrabajo.Count > 0)
+            {   
+
+                            <table class="table">
+                                    <tr>
+                                        <td>
+                                            Nombre Horario
+                                        </td>
+                                        <td>
+                                            Dias de Trabajo
+                                        </td>
+                                        <td>
+                                            Entrada
+                                        </td>
+                                        <td>
+                                            Salida
+                                        </td>
+                                    </tr>
+                            @foreach (HorarioTrabajo ht in lHtrabajo)
+                {
+                    SelectListItem listItem = new SelectListItem { Text = ht.NombreHorario, Value = ht.IdHorarioTrabajo.ToString() };
+
+                    sliHorarioTrabajo.Add(listItem);
+
+                                    <tr>
+                                        <td>
+                                            <bold>@ht.NombreHorario</bold>
+                                        </td>
+                                        <td>
+                                            <label>@ht.DiasSemana</label>
+                                        </td>
+                                        <td>
+                                            <label>@HorarioTrabajo.HoraFormat(ht.HInicio, ht.MInicio)</label> 
+                                        </td>
+                                        <td>
+                                            <label>@HorarioTrabajo.HoraFormat(ht.HFin, ht.MFin)</label>
+                                        </td>
+
+                                    </tr>
+                        
+                }
+                                <tr>
+                                    <td colspan="2">
+                                        Horarios disponibles
+                                    </td>
+                                    <td colspan="2">
+                                        @Html.ActionLink("Crear Horario", "CrearHorario", "HorarioTrabajo", null, new { @class = "btn btn-primary btn-sm" })
+                                    </td>
+                                </tr>
+                            </table>
+            }
+        else
+        {
+                        <label>No tienes horarios creados</label> 
+        }
+    }
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CrearUsuario">
+            <h2>Crear Usuario</h2>
+            <hr />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <table>
+                <tr>
+                    <td class="form-select">
+                        <label asp-for="RolUsuario"></label>
+                            
+                        <select asp-for="RolUsuario" asp-items="@(lRoles)"></select>                        
+                    </td>
+                    <td class="form-select">
+                        <label asp-for="IdEstadoUsuario" class="control-label"></label>
+
+                        <select asp-for="IdEstadoUsuario" asp-items="@(lEstados)"></select>
+                        <span asp-validation-for="IdEstadoUsuario" class="text-danger"></span>
+                    </td>
+                </tr>
+                <tr  id="camposEmpleado" style="display:block;">
+                    <td class="form-select">
+                        <label asp-for="IdEspecialidad"></label>
+                            
+                        <select asp-for="IdEspecialidad" asp-items="@(lEspecialidades)"></select>                        
+                    </td>
+                    <td class="form-select">
+                        <label asp-for="IdHorarioTrabajo" class="control-label"></label>
+
+                        <select asp-for="IdHorarioTrabajo" asp-items="@(sliHorarioTrabajo)"></select>
+                        <span asp-validation-for="IdHorarioTrabajo" class="text-danger"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="form-floating">
+                            <input asp-for="PrimerNombre" class="form-control" aria-required="true" />
+                            <label asp-for="PrimerNombre"></label>                            
+                    </td>
+                    <td class="form-floating">
+                            
+                            <input asp-for="PrimerApellido" class="form-control" aria-required="true" />
+                            <label asp-for="PrimerApellido"></label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span asp-validation-for="PrimerNombre" class="text-danger"></span>
+                    </td>
+                    <td>
+                        <span asp-validation-for="PrimerApellido" class="text-danger"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="form-floating">
+                        <input asp-for="SegundoNombre" class="form-control" aria-required="true" />
+                        <label asp-for="SegundoNombre"></label>
+                    </td>
+                    <td class="form-floating">
+                        <input asp-for="SegundoApellido" class="form-control" aria-required="true" />
+                        <label asp-for="SegundoApellido"></label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span asp-validation-for="SegundoNombre" class="text-danger"></span>
+                    </td>
+                    <td>
+                        <span asp-validation-for="SegundoApellido" class="text-danger"></span>
+                    </td>
+                </tr>
+                 <tr>
+                    <td class="form-floating">
+                        <input asp-for="Direccion" class="form-control" autocomplete="on" aria-required="true" />
+                        <label asp-for="Direccion"></label>
+                    </td>
+                    <td class="form-floating">
+                        <input asp-for="PhoneNumber" class="form-control" autocomplete="on" aria-required="true" />
+                        <label asp-for="PhoneNumber">Tel&eacute;fono</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span asp-validation-for="Direccion" class="text-danger"></span>
+                    </td>
+                    <td>
+                        <span asp-validation-for="PhoneNumber" class="text-danger"></span>                      
+                    </td>
+                </tr>
+                <tr>
+                    <td class="form-floating">
+                        <input asp-for="FechaNacimiento" class="form-control" autocomplete="off" aria-required="true" />
+                        <label asp-for="FechaNacimiento"></label>
+                        
+                    </td>
+                    <td class="form-select">
+                        <label asp-for="IdPaisNacimiento">Pa&iacute;s de Nacimiento</label>
+                        <select asp-for="IdPaisNacimiento" asp-items="@(lPais)"></select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span asp-validation-for="FechaNacimiento" class="text-danger"></span>
+                    </td>
+                    <td>
+                        <span asp-validation-for="IdPaisNacimiento" class="text-danger"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="form-select">
+                        <label asp-for="IdTipoIdentificacion"></label>
+                        <select asp-for="IdTipoIdentificacion" asp-items="@(lTipoId)"></select>
+                    </td>
+                    <td class="form-floating">
+                        <input asp-for="Identificacion" class="form-control" autocomplete="off" aria-required="true" />
+                        <label asp-for="Identificacion"></label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span asp-validation-for="IdTipoIdentificacion" class="text-danger"></span>
+                    </td>
+                    <td>
+                        <span asp-validation-for="Identificacion" class="text-danger"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="form-select">
+                        <label asp-for="Sexo">Selecciona tu Sexo</label>
+                        <select asp-for="Sexo" asp-items="@(lSexo)"></select>                        
+                    </td>
+                    <td class="form-floating">
+                        <input asp-for="Email" class="form-control" autocomplete="off" aria-required="true" />
+                        <label asp-for="Email"></label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span asp-validation-for="Sexo" class="text-danger"></span>
+                    </td>
+                    <td>
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Guardar Cambios</button>
+                    </td>
+                    <td>
+                        <a asp-action="ListarUsuarios" class="w-100 btn btn-lg btn-danger">Cancelar</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input asp-for="FechaNacimiento" type="hidden" />
+                        <input asp-for="LockoutEnabled" type="hidden" />
+                        <input asp-for="NormalizedEmail" type="hidden" />
+                        <input asp-for="PasswordHash" type="hidden" />
+                        <input asp-for="PhoneNumber" type="hidden" />
+                        <input asp-for="PhoneNumberConfirmed" type="hidden" />
+                        <input asp-for="SecurityStamp" type="hidden" />
+                        <input asp-for="UserName" type="hidden" />
+                        <input asp-for="ConcurrencyStamp" type="hidden" />
+                        <input asp-for="NormalizedUserName" type="hidden" />
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

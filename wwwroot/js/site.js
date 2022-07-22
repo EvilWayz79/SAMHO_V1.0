@@ -30,7 +30,7 @@ $(document).ready(function () {
         //var stringTest = $("input[type=checkbox][name=DiasSemana]:checked").val();
 
         //var stringTest = $.map($('input[name="DiasSemana"]:checked'), function (c) { return c.value; })
-
+        /*
         var diaSeleccionado = $(this).val();
         //var diasEnCampo = $("#DiasSemana").text();
         var diasEnCampo = $("#DiasSemana").val().trim();
@@ -46,10 +46,20 @@ $(document).ready(function () {
 
         //$("#DiasSemana").text(diasEnCampo);
         
-        $("#DiasSemana").val(diasEnCampo);
+        $("#DiasSemana").val(diasEnCampo);*/
     });
     /*--------------------------------------------------------------------------------------------------*/
     /*--------------------------------------------------------------------------------------------------*/
+    $("#RolUsuario").ready().change(function () {
+        if ($(this).val() != 'Paciente') {
+            $("#camposEmpleado").css("display", "block");
+        }
+        else {
+            $("#camposEmpleado").css("display", "none");
+        }
+    })
+    
+
 })
 
     

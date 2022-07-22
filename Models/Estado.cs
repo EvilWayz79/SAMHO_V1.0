@@ -12,6 +12,50 @@ namespace SAMHO.Models
 
         public string TipoEstado { get; set; }
 
+        
+        public static Estado GetCodigoEstadoUsuario(int IdEstado)
+        {
+            Estado estado = new Estado();
+
+            try
+            {
+                string storedProcedure = "SP_EstadosPORID";
+                string parameterNameA = "@IDESTADO";
+
+                var connection = GlobalData.APLICACION["connectionString"];
+
+                using (SqlConnection con = new SqlConnection(connection))
+                {
+                    using (SqlCommand cmd = new SqlCommand(storedProcedure, con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add(parameterNameA, SqlDbType.Int).Value = IdEstado;
+
+                        con.Open();
+
+                        SqlDataReader idr = cmd.ExecuteReader();
+
+                        if (idr.HasRows)
+                        {
+                            while (idr.Read())
+                            {
+                                estado.IdEstado = Convert.ToInt32(idr["IdEstado"]);
+                                estado.TipoEstado = idr["TipoEstado"].ToString();
+                                estado.GrupoEstado = idr["GrupoEstado"].ToString();
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                //TODO ERROR CODE
+            }
+
+            return estado;
+
+        }
+
 
         /// <summary>
         /// Retorna el código de Estado para la entidad seleccionada

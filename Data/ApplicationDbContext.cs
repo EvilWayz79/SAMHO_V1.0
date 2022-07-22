@@ -54,6 +54,10 @@ namespace SAMHO.Data
             {
                 entity.ToTable("UserTokens");
             });
+
+            //Eliminar campo innecesario en base de datos
+            builder.Entity<ApplicationUser>().Ignore(e => e.RolUsuario);
+            builder.Entity<Pais>().Ignore(e => e.Selected);
         }
 
         //Entidades
@@ -62,5 +66,7 @@ namespace SAMHO.Data
         public DbSet<SAMHO.Models.Pais>? Pais { get; set; }
         public DbSet<SAMHO.Models.Especialidad>? Especialidad { get; set; }
         public DbSet<SAMHO.Models.HorarioTrabajo>? HorarioTrabajo { get; set; }
+        public DbSet<SAMHO.Models.AUViewModel>? AUViewModel { get; set; }
+        public DbSet<SAMHO.Models.Medicina>? Medicina { get; set; }
     }
 }

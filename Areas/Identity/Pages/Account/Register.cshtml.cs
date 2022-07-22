@@ -168,8 +168,7 @@ namespace SAMHO.Areas.Identity.Pages.Account
 
                 //BUSCAR UNICO ID
                 if (!ApplicationUser.ValidarIdUnica(Input.Identificacion))
-                    ModelState.AddModelError(String.Empty, "Identificacion ya registrada");
-
+                    ModelState.AddModelError(String.Empty, RESOURCE.UniqueId);
                 
 
                 if (ModelState.IsValid)
@@ -195,21 +194,17 @@ namespace SAMHO.Areas.Identity.Pages.Account
                     user.IdHorarioTrabajo = 0;
                     user.IdPaisNacimiento = Input.IdPaisNacimiento;
                     user.IdTipoIdentificacion = Input.IdTipoIdentificacion;
-                    user.IdTipoUsuario = 0;
                     user.PrimerApellido = Input.PrimerApellido;
                     user.SegundoApellido = Input.SegundoApellido;
                     user.PrimerNombre = Input.PrimerNombre;
                     user.SegundoNombre = Input.SegundoNombre;
-                    user.Sexo = Input.Sexo;
-
-
-                    
+                    user.Sexo = Input.Sexo;                    
 
                     var result = await _userManager.CreateAsync(user, Input.Password);
 
                     if (result.Succeeded)
                     {
-                        _logger.LogInformation("Se registra un nuevo paciente.");
+                        _logger.LogInformation(RESOURCE.PacienteNuevoRegistrado);
 
                         var userId = await _userManager.GetUserIdAsync(user);
                         var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);

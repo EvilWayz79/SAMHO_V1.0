@@ -1,0 +1,60 @@
+﻿@model IEnumerable<SAMHO.Models.Medicina>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="CrearMedicina">Crear Nueva</a>
+</p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.PrecioMedicina)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.IdEstadoMedicina)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CantidadMedicina)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FechaCaducidad)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FechaRegistro)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+    @foreach (var item in Model) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PrecioMedicina)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdEstadoMedicina)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CantidadMedicina)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FechaCaducidad)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FechaRegistro)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.IdMedicina">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.IdMedicina">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.IdMedicina">Delete</a>
+                </td>
+            </tr>
+    }
+        </tbody>
+    </table>
+

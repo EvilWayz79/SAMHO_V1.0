@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SAMHO.Data;
 
@@ -11,9 +12,10 @@ using SAMHO.Data;
 namespace SAMHO.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220719092017_update AppUser")]
+    partial class updateAppUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -242,6 +244,10 @@ namespace SAMHO.Migrations
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)");
 
+                    b.Property<string>("RolUsuario")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
@@ -288,49 +294,10 @@ namespace SAMHO.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("Direccion")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("EstadoUsuario")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("FechaCreacion")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("FechaNacimiento")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("IdEspecialidad")
-                        .HasColumnType("int");
-
                     b.Property<int>("IdEstadoUsuario")
                         .HasColumnType("int");
 
-                    b.Property<int>("IdHorarioTrabajo")
-                        .HasColumnType("int");
-
-                    b.Property<int>("IdPaisNacimiento")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Identificacion")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("ListaRoles")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NombreCompleto")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PaisNacimiento")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -347,18 +314,6 @@ namespace SAMHO.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SegundoNombre")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Sexo")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Telefono")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TipoIdentificacion")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -453,38 +408,6 @@ namespace SAMHO.Migrations
                     b.HasKey("IdHorarioTrabajo");
 
                     b.ToTable("HorarioTrabajo");
-                });
-
-            modelBuilder.Entity("SAMHO.Models.Medicina", b =>
-                {
-                    b.Property<int>("IdMedicina")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdMedicina"), 1L, 1);
-
-                    b.Property<int>("CantidadMedicina")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("FechaCaducidad")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("FechaRegistro")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("IdEstadoMedicina")
-                        .HasColumnType("int");
-
-                    b.Property<string>("NombreMedicina")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("PrecioMedicina")
-                        .HasColumnType("float");
-
-                    b.HasKey("IdMedicina");
-
-                    b.ToTable("Medicina");
                 });
 
             modelBuilder.Entity("SAMHO.Models.Pais", b =>

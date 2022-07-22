@@ -61,6 +61,42 @@ namespace SAMHO {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cantidad de Medicina.
+        /// </summary>
+        public static string CantidadMedicina {
+            get {
+                return ResourceManager.GetString("CantidadMedicina", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Direcci&amp;oacute;n.
+        /// </summary>
+        public static string Direccion {
+            get {
+                return ResourceManager.GetString("Direccion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Estado de Usuario.
+        /// </summary>
+        public static string EstadoUsuario {
+            get {
+                return ResourceManager.GetString("EstadoUsuario", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fecha de Caducidad.
+        /// </summary>
+        public static string FechaCaducidad {
+            get {
+                return ResourceManager.GetString("FechaCaducidad", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to La contrase&amp;tilde;a debe coincidir.
         /// </summary>
         public static string FormErr {
@@ -88,6 +124,123 @@ namespace SAMHO {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Especialidad.
+        /// </summary>
+        public static string IdEspecialidad {
+            get {
+                return ResourceManager.GetString("IdEspecialidad", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Estado Medicina.
+        /// </summary>
+        public static string IdEstadoMedicina {
+            get {
+                return ResourceManager.GetString("IdEstadoMedicina", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Estado del Usuario.
+        /// </summary>
+        public static string IdEstadoUsuario {
+            get {
+                return ResourceManager.GetString("IdEstadoUsuario", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Horario de Trabajo.
+        /// </summary>
+        public static string IdHorarioTrabajo {
+            get {
+                return ResourceManager.GetString("IdHorarioTrabajo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pa&amp;iacute;s de Nacimiento.
+        /// </summary>
+        public static string IdPaisNacimiento {
+            get {
+                return ResourceManager.GetString("IdPaisNacimiento", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nombre de la medicina.
+        /// </summary>
+        public static string NombreMedicina {
+            get {
+                return ResourceManager.GetString("NombreMedicina", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Se ha registrado un nuevo paciente.
+        /// </summary>
+        public static string PacienteNuevoRegistrado {
+            get {
+                return ResourceManager.GetString("PacienteNuevoRegistrado", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Precio de la Medicina.
+        /// </summary>
+        public static string PrecioMedicina {
+            get {
+                return ResourceManager.GetString("PrecioMedicina", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Primer Apellido.
+        /// </summary>
+        public static string PrimerApellido {
+            get {
+                return ResourceManager.GetString("PrimerApellido", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Primer Nombre.
+        /// </summary>
+        public static string PrimerNombre {
+            get {
+                return ResourceManager.GetString("PrimerNombre", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rol del Usuario.
+        /// </summary>
+        public static string RolUsuario {
+            get {
+                return ResourceManager.GetString("RolUsuario", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Segundo Apellido.
+        /// </summary>
+        public static string SegundoApellido {
+            get {
+                return ResourceManager.GetString("SegundoApellido", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Segundo Nombre.
+        /// </summary>
+        public static string SegundoNombre {
+            get {
+                return ResourceManager.GetString("SegundoNombre", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Selecciona al menos un día.
         /// </summary>
         public static string SeleccionaDia {
@@ -106,11 +259,47 @@ namespace SAMHO {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Selecciona el Rol.
+        /// </summary>
+        public static string SeleccionaRol {
+            get {
+                return ResourceManager.GetString("SeleccionaRol", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Seleccionar Pais.
         /// </summary>
         public static string SeleccionarPais {
             get {
                 return ResourceManager.GetString("SeleccionarPais", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sexo.
+        /// </summary>
+        public static string Sexo {
+            get {
+                return ResourceManager.GetString("Sexo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to La Identificaci&amp;oacute;n debe ser &amp;uacute;nica.
+        /// </summary>
+        public static string UniqueId {
+            get {
+                return ResourceManager.GetString("UniqueId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to USUARIO.
+        /// </summary>
+        public static string USUARIO {
+            get {
+                return ResourceManager.GetString("USUARIO", resourceCulture);
             }
         }
     }
